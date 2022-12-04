@@ -1,3 +1,6 @@
+import magic
+
+
 class StegoKit:
     def __init__(self, file: str):
         self.file: str = file
@@ -15,7 +18,17 @@ class StegoKit:
         StegoKit("a.png").hide(input="ABCD", output="b.png", input_type="string")
         StegoKit("a.png").hide(input="a.txt", output="b.png", input_type="file")
         """
+        input_data: bytes
+        mime_type = magic.from_file(self.file, mime=True).split("/")
+        _type = mime_type[0]
+        _subtype = mime_type[1]
+
         if input_type == "string":
-            ...
+            input_data = input.encode("utf-8")
         elif input_type == "file":
+            input_data = open(input, "rb")
+
+        if _type == "image":
+            ...
+        elif _type == "audio":
             ...
