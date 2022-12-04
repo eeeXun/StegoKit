@@ -1,5 +1,7 @@
 import magic
 
+from Audio import StegoAudio
+
 
 class StegoKit:
     def __init__(self, file: str):
@@ -31,4 +33,4 @@ class StegoKit:
         if _type == "image":
             ...
         elif _type == "audio":
-            ...
+            StegoAudio(self.file, format=_subtype).hide(input_data, output)
