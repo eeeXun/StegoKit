@@ -18,15 +18,17 @@ class StegoKit:
         StegoKit("a.png").hide(input="ABCD", output_file="b.png", input_type="string")
         StegoKit("a.png").hide(input="a.txt", output_file="b.png", input_type="file")
         """
-        input_data: bytes
+        input_data: list[str]
         mime_type = magic.from_file(self.file, mime=True).split("/")
         _type = mime_type[0]
         _subtype = mime_type[1]
 
         if input_type == "string":
-            input_data = input.encode("utf-8")
+            input_data = [bin(ord(c))[2:].rjust(8, "0") for c in input]
         elif input_type == "file":
-            input_data = open(input, "rb")
+            with open("input", "rb") as f:
+                data = f.read()
+                input_data = [bin(b)[2:].rjust(8, "0") for b in data]
 
         if _type == "image":
             ...
